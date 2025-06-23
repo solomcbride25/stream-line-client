@@ -1,85 +1,156 @@
+import React, { useEffect, useState } from "react";
+
 function Home() {
-    return (
-        <div>Home</div>
-    )
+  //  create state (w/ useState hook) to hold data for most popular content; data type will be array of objects; each representing one movie, array of objects will be list of movies,
+  // 1) most popular 2) new content 3) highest reviewed
+
+  // in use effect, will need an URL. Update requested info
+
+  const [mostPopular, setMostPopular] = useState([]);
+
+  const [newContent, setNewContent] = useState([]);
+
+  const [highestReviewed, setHighestReviewed] = useState([]);
+
+  useEffect(() => {
+    const getHighestReviewed = async () => {
+        const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
+        const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key": `${import.meta.env.VITE_MOVIE_API_KEY}`,
+          "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
+        },
+    };
+    try {
+        const response = await fetch(url, options);
+        console.log(response)
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+          setHighestReviewed(result.items.slice(0, 3)); 
+    }
+} catch (error) {
+    console.log(error);
+  }
+};
+getHighestReviewed();
+}, []);
+console.log(highestReviewed);
+  
+  useEffect(() => {
+    const getNewContent = async () => {
+        const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
+        const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key": `${import.meta.env.VITE_MOVIE_API_KEY}`,
+          "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
+        },
+    };
+    try {
+        const response = await fetch(url, options);
+        console.log(response)
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+          setNewContent(result.items.slice(0, 3)); 
+    }
+} catch (error) {
+    console.log(error);
+  }
+};
+getNewContent();
+}, []);
+console.log(newContent);
+
+  useEffect(() => {
+    const getMostPopular = async () => {
+      const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
+      const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key": `${import.meta.env.VITE_MOVIE_API_KEY}`,
+          "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
+        },
+      };
+      try {
+        const response = await fetch(url, options);
+        console.log(response)
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+          setMostPopular(result.items.slice(0, 3));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMostPopular();
+  }, []);
+  console.log(mostPopular);
+  return (
+    <main>
+      <section className="poster-section">
+        <h2 className="section-title">Most Popular</h2>
+        <div className="poster-grid" />
+        {mostPopular.map((movie, index) => (
+          <div className="poster" key={index}>
+            <a href="#">
+              <img src={movie.image} alt={movie.title} />
+            </a>
+            <p>
+              <strong>{movie.title}</strong>
+              <br />
+              {movie.platform}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      <section className="poster-section">
+        <h2 className="section-title">New on Streamline</h2>
+        {newContent.map((movie, index) => (
+          <div>
+            <div className="poster-grid" />
+            <div className="poster" key={index}>
+              <a href="#">
+                <img src={movie.image} alt={movie.title} />
+              </a>
+              <p>
+                <strong>{movie.title}</strong>
+                <br />
+                {movie.platform}
+              </p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="poster-section">
+        <h2 className="section-title">Highest Reviewed</h2>
+        {highestReviewed.map((movie, index) => (
+          <div>
+            <div className="poster-grid" />
+            <div className="poster" key={index}>
+              <a href="#">
+                <img src={movie.image} alt={movie.title} />
+              </a>
+              <p>
+                <strong>{movie.title}</strong>
+                <br />
+                {movie.platform}
+              </p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="poster-section">
+        <h2 className="section-title">Featured Lists</h2>
+      </section>
+    </main>
+  );
 }
-
-<main>
-<!-- Section: Most Popular -->
-<section class="poster-section">
-  <h2 class="section-title">Most Popular</h2>
-  <div class="poster-grid">
-    <div class="poster">
-      <a href="#"><img src="images/invincible.jpeg" alt="Invincible" /></a>
-      <p><strong>Invincible: Season 3 (2025)</strong><br>Amazon Prime</p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/last of us.jpeg" alt="The Last of Us" /></a>
-      <p><strong>The Last of Us: Season 2 (2025)</strong><br>Max</p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/daredevil.jpeg" alt="Daredevil Born Again" /></a>
-      <p><strong>Daredevil Born Again: Season 1</strong><br>Disney+</p>
-    </div>
-    <div class="see-more">
-        <a href="#">
-            <p>See More...</p>
-        </a>
-  </div>
-</section>
-
-<!-- Section: New on Streamline -->
-<section class="poster-section">
-  <h2 class="section-title">New on Streamline</h2>
-  <div class="poster-grid">
-    <div class="poster">
-      <a href="#"><img src="images/micky 17.jpeg" alt="Micky 17" /></a>
-      <p><strong>Micky 17 (2025)</strong></p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/a working man.jpeg" alt="A Working Man" /></a>
-      <p><strong>A Working Man</strong></p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/black bag.jpeg" alt="Black Bag" /></a>
-      <p><strong>Black Bag (2025)</strong></p>
-    </div>
-    <div class="see-more">
-        <a href="#">
-            <p>See More...</p>
-        </a>
-  </div>
-</section>
-
-<!-- Section: Highest Reviewed -->
-<section class="poster-section">
-  <h2 class="section-title">Highest Reviewed</h2>
-  <div class="poster-grid">
-    <div class="poster">
-      <a href="#"><img src="images/common side effects.jpeg" alt="Common Side Effects" /></a>
-      <p><strong>Common Side Effects</strong><br>Max</p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/adolescence.jpeg" alt="Adolescence" /></a>
-      <p><strong>Adolescence</strong><br>Netflix</p>
-    </div>
-    <div class="poster">
-      <a href="#"><img src="images/john wick 4.jpeg" alt="John Wick 4" /></a>
-      <p><strong>John Wick 4 (2023)</strong><br>Hulu</p>
-    </div>
-    <div class="see-more">
-        <a href="#">
-            <p>See More...</p>
-        </a>
-    </div>
-  </div>
-</section>
-
-<!-- Section: Featured Lists -->
-<section class="poster-section">
-  <h2 class="section-title">Featured Lists</h2>
-  <!-- You can populate this with curated content or lists -->
-</section>
-</main>
 
 export default Home;
