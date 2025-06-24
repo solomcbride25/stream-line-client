@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function Home() {
   //  create state (w/ useState hook) to hold data for most popular content; data type will be array of objects; each representing one movie, array of objects will be list of movies,
@@ -14,55 +14,55 @@ function Home() {
 
   useEffect(() => {
     const getHighestReviewed = async () => {
-        const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
-        const options = {
+      const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
+      const options = {
         method: "GET",
         headers: {
           "x-rapidapi-key": `${import.meta.env.VITE_MOVIE_API_KEY}`,
           "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
         },
-    };
-    try {
+      };
+      try {
         const response = await fetch(url, options);
-        console.log(response)
+        console.log(response);
         if (response.ok) {
           const result = await response.json();
           console.log(result);
-          setHighestReviewed(result.items.slice(0, 3)); 
-    }
-} catch (error) {
-    console.log(error);
-  }
-};
-getHighestReviewed();
-}, []);
-console.log(highestReviewed);
-  
+          setHighestReviewed(result.items.slice(0, 3));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getHighestReviewed();
+  }, []);
+  console.log(highestReviewed);
+
   useEffect(() => {
     const getNewContent = async () => {
-        const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
-        const options = {
+      const url = `${import.meta.env.VITE_MOVIE_API_URL}/top250-movies`;
+      const options = {
         method: "GET",
         headers: {
           "x-rapidapi-key": `${import.meta.env.VITE_MOVIE_API_KEY}`,
           "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
         },
-    };
-    try {
+      };
+      try {
         const response = await fetch(url, options);
-        console.log(response)
+        console.log(response);
         if (response.ok) {
           const result = await response.json();
           console.log(result);
-          setNewContent(result.items.slice(0, 3)); 
-    }
-} catch (error) {
-    console.log(error);
-  }
-};
-getNewContent();
-}, []);
-console.log(newContent);
+          setNewContent(result.items.slice(0, 3));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNewContent();
+  }, []);
+  console.log(newContent);
 
   useEffect(() => {
     const getMostPopular = async () => {
@@ -76,7 +76,7 @@ console.log(newContent);
       };
       try {
         const response = await fetch(url, options);
-        console.log(response)
+        console.log(response);
         if (response.ok) {
           const result = await response.json();
           console.log(result);
@@ -88,7 +88,9 @@ console.log(newContent);
     };
     getMostPopular();
   }, []);
+
   console.log(mostPopular);
+  
   return (
     <main>
       <section className="poster-section">
