@@ -8,6 +8,7 @@ import CSS from '.'
 
 function App() {
   useEffect(() => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     fetch('https://stream-line-server.onrender.com')
       .then(res => res.json())
       .then(data => console.log(data))
