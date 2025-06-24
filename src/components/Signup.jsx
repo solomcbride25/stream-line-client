@@ -15,9 +15,9 @@ function Signup() {
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault()
-    console.log(signupFormData)
-  } 
+    event.preventDefault();
+    console.log(signupFormData);
+  };
 
   return (
     <main>
